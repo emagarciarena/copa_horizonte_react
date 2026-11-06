@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false)
@@ -30,12 +31,12 @@ function Navbar() {
       </button>
 
       <nav className={menuAbierto ? "navbar__menu open" : "navbar__menu"}>
-        <a href="#inicio" className="active" onClick={cerrarMenu}>Inicio</a>
-        <a href="#cronograma" onClick={cerrarMenu}>Cronograma</a>
-        <a href="#posiciones" onClick={cerrarMenu}>Posiciones</a>
-        <a href="#fanaticos" onClick={cerrarMenu}>Fanáticos</a>
-        <a href="#equipos" onClick={cerrarMenu}>Equipos</a>
-        <a href="#contacto" onClick={cerrarMenu}>Contacto</a>
+        <NavLink to="/" end onClick={cerrarMenu}>Inicio</NavLink>
+        <NavLink to="/cronograma" onClick={cerrarMenu}>Cronograma</NavLink>
+        <NavLink to="/posiciones" onClick={cerrarMenu}>Posiciones</NavLink>
+        <NavLink to="/fanaticos" onClick={cerrarMenu}>Fanáticos</NavLink>
+        <NavLink to="/equipos" onClick={cerrarMenu}>Equipos</NavLink>
+        <NavLink to="/contacto" onClick={cerrarMenu}>Contacto</NavLink>
       </nav>
     </header>
   )
