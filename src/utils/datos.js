@@ -150,3 +150,20 @@ export function armarLinks(filasEquipos) {
   })
   return links
 }
+
+// Usuarios de prueba para el login
+export const USUARIOS = [
+  { usuario: "fan1", password: "hockey123" },
+  { usuario: "fan2", password: "copa2026" },
+]
+
+// Lista de todos los equipos que aparecen en los partidos
+export function obtenerListaEquipos(partidos) {
+  const nombres = partidos.flatMap(p => [p.equipo_local, p.equipo_visitante])
+  return [...new Set(nombres)].filter(Boolean).sort()
+}
+
+// Identificador único de un partido (incluye la categoría para no mezclar partidos iguales de distintas categorías)
+export function generarIdPartido(partido) {
+  return `${partido.fecha}__${partido.categoria}__${partido.equipo_local}__${partido.equipo_visitante}`
+}
