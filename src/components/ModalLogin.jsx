@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { USUARIOS } from '../utils/datos'
+import { USUARIOS, ROLES } from '../utils/datos'
 
 function ModalLogin({ abierto, onCerrar, onLoginOk }) {
   // vista puede ser "login", "registro" o "recuperar"
@@ -8,6 +8,7 @@ function ModalLogin({ abierto, onCerrar, onLoginOk }) {
   const [usuario, setUsuario] = useState("")
   const [password, setPassword] = useState("")
   const [mostrarPassword, setMostrarPassword] = useState(false)
+  const [rol, setRol] = useState("Fan")
   const [error, setError] = useState(false)
 
   const [regUsuario, setRegUsuario] = useState("")
@@ -29,6 +30,7 @@ function ModalLogin({ abierto, onCerrar, onLoginOk }) {
     setUsuario("")
     setPassword("")
     setMostrarPassword(false)
+    setRol("Fan")
     setError(false)
     setRegUsuario("")
     setRegPassword("")
@@ -54,10 +56,12 @@ function ModalLogin({ abierto, onCerrar, onLoginOk }) {
 
   function enviarLogin(e) {
     e.preventDefault()
-    const valido = USUARIOS.some(u => u.usuario === usuario.trim() && u.password === password)
+    const encontrado = USUARIOS.find(
+      u => u.usuario === usuario.trim() && u.password === password && u.rol === rol
+    )
 
-    if (valido) {
-      onLoginOk(usuario.trim())
+    if (encontrado) {
+      onLoginOk(encontrado.usuario, encontrado.rol)
       cerrar()
     } else {
       setError(true)
@@ -137,13 +141,25 @@ function ModalLogin({ abierto, onCerrar, onLoginOk }) {
               </button>
             </div>
 
+            <label className="modal__label" htmlFor="loginRol">Rol</label>
+            <select
+              id="loginRol"
+              className="modal__input"
+              value={rol}
+              onChange={(e) => setRol(e.target.value)}
+            >
+              {ROLES.map(opcion => (
+                <option key={opcion} value={opcion}>{opcion}</option>
+              ))}
+            </select>
+
             <p className="modal__forgot">
               <button type="button" className="modal__link" onClick={() => cambiarVista("recuperar")}>
                 ¿Olvidaste tu contraseña?
               </button>
             </p>
 
-            {error && <p className="modal__error">Usuario o contraseña incorrectos.</p>}
+            {error && <p className="modal__error">Usuario, contraseña o rol incorrectos.</p>}
 
             <button type="submit" className="btn btn--primary modal__submit">Ingresar</button>
 

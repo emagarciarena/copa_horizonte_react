@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-function Navbar({ usuario, onIngresar, onSalir}) {
+function Navbar({ usuario, rol, onIngresar, onSalir }) {
   const [menuAbierto, setMenuAbierto] = useState(false)
 
   function alternarMenu() {
@@ -11,6 +11,7 @@ function Navbar({ usuario, onIngresar, onSalir}) {
   function cerrarMenu() {
     setMenuAbierto(false)
   }
+
   function clickAuth() {
     cerrarMenu()
     if (usuario) {
@@ -45,7 +46,12 @@ function Navbar({ usuario, onIngresar, onSalir}) {
         <NavLink to="/fanaticos" onClick={cerrarMenu}>Fanáticos</NavLink>
         <NavLink to="/equipos" onClick={cerrarMenu}>Equipos</NavLink>
         <NavLink to="/contacto" onClick={cerrarMenu}>Contacto</NavLink>
-                <button type="button" className="navbar__auth" onClick={clickAuth}>
+        {rol === "Administrador" && (
+          <NavLink to="/panel" onClick={cerrarMenu}>
+            <i className="fa-solid fa-user-shield"></i> Panel
+          </NavLink>
+        )}
+        <button type="button" className="navbar__auth" onClick={clickAuth}>
           {usuario ? `Salir (${usuario})` : "Ingresar"}
         </button>
       </nav>

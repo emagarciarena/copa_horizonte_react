@@ -261,6 +261,11 @@
   cursor: wait;
 }
 
+.modal__input option {
+  background: var(--color-bg-dark);   /* para que la lista desplegable también sea oscura */
+  color: var(--color-cream);
+}
+
 .modal__input:focus {
   outline: none;
   border-color: var(--color-gold);

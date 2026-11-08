@@ -153,9 +153,14 @@ export function armarLinks(filasEquipos) {
 
 // Usuarios de prueba para el login
 export const USUARIOS = [
-  { usuario: "fan1", password: "hockey123" },
-  { usuario: "fan2", password: "copa2026" },
+  { usuario: "fan1", password: "hockey123", rol: "Fan" },
+  { usuario: "fan2", password: "copa2026", rol: "Fan" },
+  { usuario: "jugadora1", password: "cancha123", rol: "Jugador" },
+  { usuario: "admin", password: "admin2026", rol: "Administrador" },
 ]
+
+// Roles que se pueden elegir al iniciar sesión
+export const ROLES = ["Fan", "Jugador", "Administrador"]
 
 // Lista de todos los equipos que aparecen en los partidos
 export function obtenerListaEquipos(partidos) {

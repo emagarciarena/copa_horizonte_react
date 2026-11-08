@@ -10,6 +10,7 @@ import {
   parsearCSV,
   armarLogos,
   armarLinks,
+  armarLinkImagenDrive,
   calcularTodosLosEquipos,
 } from '../utils/datos'
 
@@ -39,7 +40,20 @@ function Equipos() {
     cargarDatos()
   }, [])
 
-  const filtrados = calcularTodosLosEquipos(partidos).filter(equipo => {
+    // equipos que agregó el administrador desde el panel
+  const equiposPanel = JSON.parse(localStorage.getItem("equiposPanel")) || []
+  const logosPanel = {}
+  equiposPanel.forEach(eq => {
+    if (eq.logo) logosPanel[eq.nombre] = armarLinkImagenDrive(eq.logo)
+  })
+
+  const equiposDelSheet = calcularTodosLosEquipos(partidos)
+  const nuevos = equiposPanel
+    .filter(eq => !equiposDelSheet.some(e => e.nombre === eq.nombre && e.categoria === eq.categoria))
+    .map(eq => ({ nombre: eq.nombre, categoria: eq.categoria, pj: 0, pts: 0 }))
+  const todos = [...equiposDelSheet, ...nuevos]
+
+  const filtrados = todos.filter(equipo => {
     const coincideCategoria = categoria === "Todos" || equipo.categoria === categoria
     const coincideBusqueda = equipo.nombre.toLowerCase().includes(busqueda.toLowerCase())
     return coincideCategoria && coincideBusqueda
@@ -84,7 +98,7 @@ function Equipos() {
             target="_blank"
             rel="noopener"
           >
-            <EscudoEquipo nombre={equipo.nombre} logos={logos} clase="team-card__badge" />
+            <EscudoEquipo nombre={equipo.nombre} logos={{...logos, ...logosPanel}} clase="team-card__badge" />
             <div className="team-card__name">{equipo.nombre}</div>
             <div className="team-card__category">{equipo.categoria}</div>
             <div className="team-card__stats">
