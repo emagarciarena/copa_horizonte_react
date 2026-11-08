@@ -172,3 +172,43 @@ export function obtenerListaEquipos(partidos) {
 export function generarIdPartido(partido) {
   return `${partido.fecha}__${partido.categoria}__${partido.equipo_local}__${partido.equipo_visitante}`
 }
+
+// Partidos que cargó el administrador desde el panel
+export function leerPartidosPanel() {
+  return JSON.parse(localStorage.getItem("partidosPanel")) || []
+}
+
+// Pasa "2026-11-14" a "Sáb 14 nov" 
+export function formatearFecha(fechaISO) {
+  const [anio, mes, dia] = fechaISO.split("-").map(Number)
+  const fecha = new Date(anio, mes - 1, dia)
+  const dias = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
+  const meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+  return `${dias[fecha.getDay()]} ${dia} ${meses[mes - 1]}`
+}
+
+// Resultados que cargó el administrador para partidos de la planilla: { "idPartido": { goles_local, goles_visitante } }
+export function leerResultadosPanel() {
+  return JSON.parse(localStorage.getItem("resultadosPanel")) || {}
+}
+
+// A los partidos de la planilla les aplica los resultados cargados desde el panel
+export function aplicarResultados(partidosPlanilla, resultados) {
+  return partidosPlanilla.map(partido => {
+    const resultado = resultados[generarIdPartido(partido)]
+    if (resultado) {
+      return {
+        ...partido,
+        goles_local: resultado.goles_local,
+        goles_visitante: resultado.goles_visitante,
+        estado: "Final",
+      }
+    }
+    return partido
+  })
+}
+
+// Partidos de la planilla (con sus resultados cargados) + partidos programados desde el panel
+export function mezclarPartidos(partidosPlanilla) {
+  return [...aplicarResultados(partidosPlanilla, leerResultadosPanel()), ...leerPartidosPanel()]
+}

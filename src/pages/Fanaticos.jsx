@@ -10,6 +10,7 @@ import {
   armarLogos,
   obtenerListaEquipos,
   generarIdPartido,
+  mezclarPartidos,
 } from '../utils/datos'
 
 function Fanaticos({ usuario, onIngresar }) {
@@ -29,7 +30,7 @@ function Fanaticos({ usuario, onIngresar }) {
     async function cargarDatos() {
       try {
         const respuestaPartidos = await fetch(SHEET_CSV_URL)
-        setPartidos(parsearCSV(await respuestaPartidos.text()))
+        setPartidos(mezclarPartidos(parsearCSV(await respuestaPartidos.text())))
 
         const respuestaEquipos = await fetch(SHEET_EQUIPOS_CSV_URL)
         setLogos(armarLogos(parsearCSV(await respuestaEquipos.text())))

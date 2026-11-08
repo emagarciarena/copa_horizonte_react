@@ -4,8 +4,11 @@ import '../styles/styles-panel.css'
 import PageHeader from '../components/PageHeader'
 import FiltroChips from '../components/FiltroChips'
 import PanelEquipos from '../components/PanelEquipos'
+import PanelJugadoras from '../components/PanelJugadoras'
+import PanelPartidos from '../components/PanelPartidos'
+import PanelResultados from '../components/PanelResultados'
 
-const SECCIONES = ["Equipos", "Jugadoras", "Partidos", "Resultados y puntos"]
+const SECCIONES = ["Equipos", "Jugadoras", "Partidos", "Resultados"]
 
 function Panel({ rol }) {
   const [seccion, setSeccion] = useState("Equipos")
@@ -29,13 +32,9 @@ function Panel({ rol }) {
 
       <section className="panel">
         {seccion === "Equipos" && <PanelEquipos />}
-
-        {seccion !== "Equipos" && (
-            <div className="panel__card">
-                <h3 className="panel__title">{seccion}</h3>
-                <p>Esta sección la armamos en el próximo paso.</p>
-            </div>
-        )}
+        {seccion === "Jugadoras" && <PanelJugadoras />}
+        {seccion === "Partidos" && <PanelPartidos />}
+        {seccion === "Resultados" && <PanelResultados />}
       </section>
     </>
   )

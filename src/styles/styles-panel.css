@@ -109,3 +109,25 @@
   color: var(--color-cream-muted);
   font-size: 0.85rem;
 }
+
+.panel__numero {
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+  font-family: var(--font-title);
+  color: var(--color-gold);
+}
+
+.panel__columna {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel__chips {
+  margin-bottom: 14px;
+}
+
+.panel__vacio + .panel__ok {
+  margin-top: 12px;
+}

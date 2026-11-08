@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import '../styles/styles-posiciones.css'
 import PageHeader from '../components/PageHeader'
 import FiltroChips from '../components/FiltroChips'
-import { SHEET_CSV_URL, CATEGORIAS, parsearCSV, calcularTabla } from '../utils/datos'
+import { SHEET_CSV_URL, CATEGORIAS, parsearCSV, calcularTabla, mezclarPartidos } from '../utils/datos'
 
 function Posiciones() {
   const [partidos, setPartidos] = useState([])
@@ -14,7 +14,7 @@ function Posiciones() {
       try {
         const respuesta = await fetch(SHEET_CSV_URL)
         const texto = await respuesta.text()
-        setPartidos(parsearCSV(texto))
+        setPartidos(mezclarPartidos(parsearCSV(texto)))
       } catch (error) {
         console.error("Error al cargar los partidos:", error)
       }

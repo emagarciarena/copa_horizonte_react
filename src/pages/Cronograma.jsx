@@ -10,6 +10,7 @@ import {
   parsearCSV,
   armarLogos,
   agruparPorFecha,
+  mezclarPartidos,
 } from '../utils/datos'
 
 const ESTADOS = ["Todos", "Próximos", "Finalizados"]
@@ -25,7 +26,7 @@ function Cronograma() {
     async function cargarDatos() {
       try {
         const respuestaPartidos = await fetch(SHEET_CSV_URL)
-        setPartidos(parsearCSV(await respuestaPartidos.text()))
+        setPartidos(mezclarPartidos(parsearCSV(await respuestaPartidos.text())))
 
         const respuestaEquipos = await fetch(SHEET_EQUIPOS_CSV_URL)
         setLogos(armarLogos(parsearCSV(await respuestaEquipos.text())))

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/styles-index.css'
 import ResultCard from '../components/ResultCard'
-import { SHEET_CSV_URL, SHEET_EQUIPOS_CSV_URL, parsearCSV, armarLogos } from '../utils/datos'
+import { SHEET_CSV_URL, SHEET_EQUIPOS_CSV_URL, parsearCSV, armarLogos, mezclarPartidos } from '../utils/datos'
 
 function Inicio() {
   const [partidos, setPartidos] = useState([])
@@ -13,7 +13,7 @@ function Inicio() {
     async function cargarDatos() {
       try {
         const respuestaPartidos = await fetch(SHEET_CSV_URL)
-        setPartidos(parsearCSV(await respuestaPartidos.text()))
+        setPartidos(mezclarPartidos(parsearCSV(await respuestaPartidos.text())))
 
         const respuestaEquipos = await fetch(SHEET_EQUIPOS_CSV_URL)
         setLogos(armarLogos(parsearCSV(await respuestaEquipos.text())))

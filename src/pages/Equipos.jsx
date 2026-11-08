@@ -12,6 +12,7 @@ import {
   armarLinks,
   armarLinkImagenDrive,
   calcularTodosLosEquipos,
+  mezclarPartidos,
 } from '../utils/datos'
 
 function Equipos() {
@@ -26,7 +27,7 @@ function Equipos() {
     async function cargarDatos() {
       try {
         const respuestaPartidos = await fetch(SHEET_CSV_URL)
-        setPartidos(parsearCSV(await respuestaPartidos.text()))
+        setPartidos(mezclarPartidos(parsearCSV(await respuestaPartidos.text())))
 
         const respuestaEquipos = await fetch(SHEET_EQUIPOS_CSV_URL)
         const filasEquipos = parsearCSV(await respuestaEquipos.text())
