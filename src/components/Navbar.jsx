@@ -24,7 +24,7 @@ function Navbar({ usuario, rol, onIngresar, onSalir }) {
   return (
     <header className="navbar">
       <div className="navbar__brand">
-        <img src="/logo-escudo-transparente.png" alt="Escudo Copa Horizonte" className="navbar__logo" />
+        <img src={import.meta.env.BASE_URL + "logo-escudo-transparente.png"} alt="Escudo Copa Horizonte" className="navbar__logo" />
         <span className="navbar__title">COPA <strong>HORIZONTE</strong></span>
       </div>
 
